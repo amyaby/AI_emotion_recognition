@@ -20,7 +20,7 @@
 ## Test 1 — Load & Display an Image
 
 This script demonstrates how to load an image using OpenCV and display it using Matplotlib.
-![alt text](Readme_images/photo_2025-11-29_12-07-05.jpgimage.png)
+![alt text](Readme_images/photo_2025-11-29_12-07-05.jpg)
 
 
 ### Code
