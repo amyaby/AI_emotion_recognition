@@ -1,4 +1,4 @@
-````markdown
+
 # Facial Emotion Recognition Project — Learning Phase
 
 ## Table of Contents
@@ -459,7 +459,5 @@ This README covers:
 * Loading a saved Keras model.
 * An end-to-end predict example for emotion classification.
 
-
-```
 
 
