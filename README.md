@@ -1,8 +1,6 @@
 ````markdown
 # Facial Emotion Recognition Project — Learning Phase
 
----
-
 ## Table of Contents
 1. [Test 1 — Load & Display an Image](#test-1---load--display-an-image)  
 2. [Libraries Used](#libraries-used)  
