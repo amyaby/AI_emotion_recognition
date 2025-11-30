@@ -175,7 +175,7 @@ plt.show()
 
 ---
 
-### STEP 2 — Line-by-line explanation
+### Line-by-line explanation
 
 1. `mp_face_detection = mp.solutions.face_detection`
 
