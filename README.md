@@ -2,22 +2,22 @@
 # Facial Emotion Recognition Project — Learning Phase
 
 ## Table of Contents
-1. [Test 1 — Load & Display an Image](#test-1---load--display-an-image)  
+1. [STEP 1 — Load & Display an Image](#STEP-1---load--display-an-image)  
 2. [Libraries Used](#libraries-used)  
    - [cv2 (OpenCV)](#1-cv2)  
    - [matplotlib.pyplot](#2-matplotlibpyplot)  
 3. [Key Concepts Explanation](#key-concepts-explanation)  
 4. [Recap & Next Steps](#recap--next-steps)  
-5. [Test 2 — Detect Faces with MediaPipe](#test-2---detect-faces-with-mediapipe)  
-   - [Code](#test-2-code)  
-   - [Line-by-line explanation](#test-2-line-by-line-explanation)  
-6. [Test 3 — Load a Pre-trained Emotion Recognition Model](#test-3---load-a-pre-trained-emotion-recognition-model)  
-7. [Test 4 — Predict Emotions from Images](#test-4---predict-emotions-from-images)  
-   - [Code](#test-4-code)
+5. [STEP 2 — Detect Faces with MediaPipe](#STEP-2---detect-faces-with-mediapipe)  
+   - [Code](#STEP-2-code)  
+   - [Line-by-line explanation](#STEP-2-line-by-line-explanation)  
+6. [STEP 3 — Load a Pre-trained Emotion Recognition Model](#STEP-3---load-a-pre-trained-emotion-recognition-model)  
+7. [STEP 4 — Predict Emotions from Images](#STEP-4---predict-emotions-from-images)  
+   - [Code](#STEP-4-code)
 
 ---
 
-## Test 1 — Load & Display an Image
+## STEP 1 — Load & Display an Image(opencv + matplotlib)
 
 This script demonstrates how to load an image using OpenCV and display it using Matplotlib.
 ![alt text](Readme_images/photo_2025-11-29_12-07-05.jpg)
@@ -29,7 +29,7 @@ import cv2  # BGR
 import matplotlib.pyplot as plt  # RGB
 
 # Load an image (replace with your photo path) [OpenCV]
-image_path = "/home/im_ane/emotion_recognition_project/data/test_images/ana.jpg"
+image_path = "/home/im_ane/AI_emotion_recognition/data/test_images/ana.jpg"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB for display
 
@@ -128,13 +128,13 @@ image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # RGB
 
 **Next steps**
 
-* [ ] Test this script with your own images.
+* [ ] STEP this script with your own images.
 * [ ] Move on to face detection using MediaPipe.
 * [ ] Implement emotion recognition with a pre-trained model.
 
 ---
 
-## Test 2 — Detect Faces with MediaPipe
+## STEP 2 — Detect Faces with MediaPipe
 ![alt text](Readme_images/image.png)
 
 ### Code
@@ -145,7 +145,7 @@ import matplotlib.pyplot as plt
 import mediapipe as mp
 
 # Load the image
-image_path = "/home/im_ane/emotion_recognition_project/data/test_images/ana.jpg"  # Replace with your image path
+image_path = "/home/im_ane/AI_emotion_recognition/data/test_images/ana.jpg"  # Replace with your image path
 image = cv2.imread(image_path)
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -175,7 +175,7 @@ plt.show()
 
 ---
 
-### Test 2 — Line-by-line explanation
+### STEP 2 — Line-by-line explanation
 
 1. `mp_face_detection = mp.solutions.face_detection`
 
@@ -205,7 +205,7 @@ plt.show()
 ![alt text](Readme_images/image-2.png)
 # What Happens If We Skip a Step?
 If we don’t create the face_detection object, we can’t run face detection. If we don’t call .process(), we won’t get any results. If we don’t check if results.detections:, we might try to draw boxes when there are no faces, causing an error. If we don’t loop through results.detections, we’ll only draw a box around the first face (if there are multiple faces). If we don’t use drawing_utils, we won’t see the boxes around the faces.
-## Test 3 — Load a Pre-trained Emotion Recognition Model
+## STEP 3 — Load a Pre-trained Emotion Recognition Model
 
 ### Code
 
@@ -228,11 +228,7 @@ print("Model loaded successfully!")
 * Reconstructs the model exactly as it was when saved, enabling inference with `model.predict()`.
 
 ---
-Here is your entire explanation **converted to clean, structured, copy-ready Markdown** for your README — nothing is changed, only formatted.
 
----
-
-````markdown
 # Understanding `from tensorflow.keras.models import load_model`
 
 ## TensorFlow vs Keras Relationship
@@ -403,9 +399,44 @@ Keras *itself* does not include many pre-trained models, but it does provide:
 
 ![alt text](Readme_images/image-3.png)
 
-## Test 4 — Predict Emotions from Images
+## STEP 4 — Predict Emotions from Images(Tenserflow and keras)
 
-After loading the model (Test 3), typical steps:
+Why Use TensorFlow and Keras?
+
+
+TensorFlow:
+
+What it is: An open-source machine learning framework developed by Google for building and training neural networks.
+Why we use it: TensorFlow provides a comprehensive ecosystem for machine learning, including tools for building models, training them, and deploying them in production.
+What it provides: TensorFlow is the backbone—it provides the low-level infrastructure for building, training, and running machine learning models. This includes:
+
+Core libraries for defining and executing computational graphs.
+GPU/CPU optimization and hardware acceleration.
+Tools for distributed training and deployment.
+
+Analogy: Think of TensorFlow as the engine of a car. It handles all the complex mechanics under the hood.
+
+
+Keras:
+
+What it is: A high-level neural networks API, written in Python and capable of running on top of TensorFlow.
+Why we use it: Keras simplifies the process of building and training deep learning models. It provides a user-friendly interface that makes it easier to define models, add layers, and compile models for training.
+
+What it provides: Keras is a high-level API built on top of TensorFlow. It provides user-friendly tools to:
+
+Define, train, and evaluate neural networks with minimal code.
+Load and save models (like your emotion_model.h5).
+Preprocess data and make predictions easily.
+
+Analogy: Keras is like the steering wheel and dashboard of the car. It makes driving (using machine learning) much easier without needing to understand the engine's inner workings.
+
+Pre-trained Models:
+
+Does Keras contain pre-trained models?: Keras itself does not come with pre-trained models for specific tasks like emotion recognition. However, it provides tools to load and use pre-trained models.
+Where to find pre-trained models?: You can find pre-trained models on platforms like GitHub, Kaggle, or TensorFlow Hub. For emotion recognition, you might need to download a pre-trained model file (like emotion_model.h5) from one of these sources or train your own model.
+
+
+After loading the model (STEP 3), typical steps:
 
 1. Preprocess images (resize, normalize, convert to grayscale if required).
 2. Pass images through the model with `model.predict()`.
@@ -436,7 +467,68 @@ emotion_label = np.argmax(emotion_prediction)
 emotion_labels = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
 print(f"Predicted Emotion: {emotion_labels[emotion_label]}")
 ```
+```python
+import cv2
+import numpy as np
+from tensorflow.keras.models import load_model
 
+# Load the model
+model = load_model("/home/im_ane/AI_emotion_recognition/models/emotion_model.h5")
+print("✅ Model loaded successfully!")
+
+# Load and preprocess the image
+image_path = "/home/im_ane/AI_emotion_recognition/data/test_images/ana.jpg"
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+
+if image is None:
+    print("❌ Error: Could not load image!")
+    exit()
+
+print(f"📐 Original image size: {image.shape}")
+
+# Resize to 64x64 (what the model expects)
+image = cv2.resize(image, (64, 64))
+print(f"📐 Resized image size: {image.shape}")
+
+# Normalize pixel values
+image = image.astype('float32') / 255.0
+
+# Add dimensions for model input
+image = np.expand_dims(image, axis=0)    # Add batch dimension
+image = np.expand_dims(image, axis=-1)   # Add channel dimension
+
+print(f"🎯 Final input shape: {image.shape}")
+
+# Predict emotion
+print("🧠 Making prediction...")
+emotion_prediction = model.predict(image)
+emotion_label = np.argmax(emotion_prediction)
+confidence = np.max(emotion_prediction)
+
+emotion_labels = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
+
+print("\n🎭 EMOTION RECOGNITION RESULT:")
+print("=" * 40)
+print(f"✅ Predicted Emotion: {emotion_labels[emotion_label]}")
+print(f"📊 Confidence: {confidence:.2%}")
+
+print("\n📈 All probabilities:")
+for i, emotion in enumerate(emotion_labels):
+    prob = emotion_prediction[0][i]
+    print(f"  {emotion:9}: {prob:.4f} ({prob:.1%})")
+    ```
+What does .h5 mean?
+.h5 files are Hierarchical Data Format files - they're used to store:
+
+Model architecture (layer configurations)
+
+Model weights (learned parameters)
+
+Training configuration (optimizer, loss function)
+
+Optimizer state (for continuing training)
+
+Think of it as a complete saved model package that you can load and use immediately without retraining.
 ---
 
 ## Notes & Tips
@@ -459,5 +551,92 @@ This README covers:
 * Loading a saved Keras model.
 * An end-to-end predict example for emotion classification.
 
+## STEP 5 : using open cv + haarcascade_frontalface  to draw a rectangle on the face
+![alt text](Readme_images/image4.png)
+```python
+import cv2
+import os
 
+# Load cascade with full path
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+# Check if cascade loaded
+if face_cascade.empty():
+    print("Error loading cascade classifier")
+    exit()
+
+# Check if image exists
+if not os.path.exists('/home/im_ane/AI_emotion_recognition/data/test_images/ana.jpg'):
+    print("Image file not found!")
+    exit()
+
+# Read image
+img = cv2.imread('/home/im_ane/AI_emotion_recognition/data/test_images/ana.jpg')
+if img is None:
+    print("Error reading image")
+    exit()
+
+# Convert to grayscale
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# Detect faces
+faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+print(f"Found {len(faces)} face(s)")
+
+# Draw rectangles
+for (x, y, w, h) in faces:
+    cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+# Display
+cv2.imshow('img', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+# STEP 5 - Open your webcam using OpenCV 
+```python
+import cv2
+
+# Load the cascade
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+# To capture video from webcam. 
+video = cv2.VideoCapture(0)
+# To use a video file as input 
+# cap = cv2.VideoCapture('filename.mp4')
+
+while True:
+    # Read the frame
+    ret, img = video.read()
+
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Detect the faces
+    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+    # Draw the rectangle around each face
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+    # Display
+    cv2.imshow('img', img)
+
+    # Stop if escape key is pressed
+    k = cv2.waitKey(30) & 0xff
+    if k==27:
+        break
+        
+# Release the VideoCapture object
+video.release()
+cv2.destroyAllWindows()
+```
+# STEP 6 - Face Detection with MediaPipe
+```python
+# Initialize MediaPipe Face Detection
+mp_face_detection = mp.solutions.face_detection
+face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.5)
+```
+```python
+ # Process the frame to detect faces
+    results = face_detection.process(rgb_frame)
+```
