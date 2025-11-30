@@ -795,6 +795,19 @@ Haar Cascades are `object detection algorithms` used to identify faces in images
 2-Detection: Sliding a window across the image and applying the cascade of classifiers to detect faces.
 ![alt text](Readme_images/imagee.jpeg)
 ![alt text](Readme_images/image6.jpeg)
+![alt text](Readme_images/image7.jpeg)
+### The Complete Pipeline:
+
+* Capture video frame
+* Convert to grayscale
+* Haar Cascade detects faces
+For each face:
+
+* Extract face region
+* Preprocess (resize, normalize)
+* H5 Model predicts emotion
+* Draw rectangle and emotion label
+
 
 # 🥳🥳🥳haaappyyyyyy🥳🥳🥳
 ![alt text](Readme_images/happy.png)
