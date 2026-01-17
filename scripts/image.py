@@ -1,8 +1,8 @@
 """
-RECONNAISSANCE D'ÉMOTIONS AVEC DEEPFACE - VERSION AMÉLIORÉE
-============================================================
+RECONNAISSANCE D'ÉMOTIONS AVEC DEEPFACE - VERSION CORRIGÉE
+===========================================================
 Reconnaît les émotions sur les visages avec DeepFace
-Affiche l'image dans une fenêtre et sauvegarde le résultat
+Correction des textes qui se chevauchent quand plusieurs visages
 
 Usage:
     python emotion_recognition_deepface_enhanced.py [image_path]
@@ -45,7 +45,7 @@ print("🎭 RECONNAISSANCE D'ÉMOTIONS AVEC DEEPFACE")
 print("="*70)
 
 # ============================================
-# FONCTION PRINCIPALE
+# FONCTION PRINCIPALE (CORRIGÉE)
 # ============================================
 
 def recognize_emotion_from_image(image_path, display=True, save=True):
@@ -63,17 +63,17 @@ def recognize_emotion_from_image(image_path, display=True, save=True):
     
     # Vérifier si le fichier existe
     if not os.path.exists(image_path):
-        print(f"❌ Erreur: Le fichier n'existe pas: {image_path}")
+        print(f" Erreur: Le fichier n'existe pas: {image_path}")
         return None
     
-    print(f"\n📷 Traitement de l'image: {os.path.basename(image_path)}")
+    print(f"\n Traitement de l'image: {os.path.basename(image_path)}")
     
     try:
         # Charger l'image
         img = cv2.imread(image_path)
         
         if img is None:
-            print(f"❌ Erreur: Impossible de charger l'image")
+            print(f" Erreur: Impossible de charger l'image")
             return None
         
         # Obtenir les dimensions
@@ -104,7 +104,7 @@ def recognize_emotion_from_image(image_path, display=True, save=True):
         print(f"   ✅ {len(results)} visage(s) détecté(s)")
         
         # ============================================
-        # ANNOTER L'IMAGE
+        # ANNOTER L'IMAGE (CORRIGÉE)
         # ============================================
         
         for idx, result in enumerate(results):
@@ -136,16 +136,36 @@ def recognize_emotion_from_image(image_path, display=True, save=True):
             
             # Dessiner le rectangle
             cv2.rectangle(result_img, (x, y), (x + w, y + h), color, 3)
+        
+            # ============================================
+            # CORRECTION : DÉCALAGE POUR CHAQUE VISAGE
+            # ============================================
+            
+            # Décalage vertical différent pour chaque visage
+            # Visage 1: 40px, Visage 2: 90px, Visage 3: 140px, etc.
+            vertical_offset = 40 + (idx * 50)
             
             # Texte principal avec l'émotion dominante
             text = f"{emotion.upper()}: {emotion_scores[emotion]:.1f}%"
             text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 1.0, 2)[0]
             
+            # Calculer la position du texte
+            text_y_top = y - vertical_offset
+            
+            # Vérifier si le texte sort de l'image en haut
+            if text_y_top < 0:
+                # Si trop haut, mettre en dessous du rectangle
+                text_y_top = y + h + 10
+                text_y_text = text_y_top + 25
+            else:
+                # Sinon, mettre au-dessus (position normale)
+                text_y_text = text_y_top + 25
+            
             # Fond pour le texte
             cv2.rectangle(
                 result_img,
-                (x, y - 40),
-                (x + text_size[0] + 10, y),
+                (x, text_y_top),
+                (x + text_size[0] + 10, text_y_top + 30),
                 color,
                 -1
             )
@@ -154,61 +174,12 @@ def recognize_emotion_from_image(image_path, display=True, save=True):
             cv2.putText(
                 result_img,
                 text,
-                (x + 5, y - 10),
+                (x + 5, text_y_text),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 1.0,
                 (0, 0, 0),
                 2
             )
-            
-            # Afficher les barres de probabilités
-            bar_width = 200
-            bar_height = 18
-            margin = 5
-            
-            start_x = x
-            start_y = y + h + 10
-            
-            # Trier les émotions par score
-            sorted_emotions = sorted(emotion_scores.items(), key=lambda x: x[1], reverse=True)
-            
-            for i, (emo, score) in enumerate(sorted_emotions):
-                bar_y = start_y + i * (bar_height + margin)
-                
-                # Vérifier qu'on ne dépasse pas l'image
-                if bar_y + bar_height < height:
-                    # Fond de la barre
-                    cv2.rectangle(
-                        result_img,
-                        (start_x, bar_y),
-                        (start_x + bar_width, bar_y + bar_height),
-                        (40, 40, 40),
-                        -1
-                    )
-                    
-                    # Barre de progression
-                    bar_length = int((score / 100.0) * bar_width)
-                    bar_color = EMOTION_COLORS.get(emo, (255, 255, 255))
-                    
-                    cv2.rectangle(
-                        result_img,
-                        (start_x, bar_y),
-                        (start_x + bar_length, bar_y + bar_height),
-                        bar_color,
-                        -1
-                    )
-                    
-                    # Texte
-                    label = f"{emo}: {score:.1f}%"
-                    cv2.putText(
-                        result_img,
-                        label,
-                        (start_x + bar_width + 10, bar_y + 14),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5,
-                        (255, 255, 255),
-                        1
-                    )
         
         # ============================================
         # AFFICHER L'IMAGE
